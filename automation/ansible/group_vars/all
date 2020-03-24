@@ -1,0 +1,36 @@
+# defaults file for cobbler
+
+cobbler_server: '10.91.1.2'
+cobbler_uname: 'cobbler'
+cobbler_password: '<pw>>'
+cobbler_netmask:  '255.255.255.0'
+cobbler_gateway: '10.91.1.1'
+
+cobbler_profile: 'cobbler_vm_profile'
+
+cobbler_nameservers: '10.75.1.250'
+cobbler_state: 'present'
+dataplane_netmask: '255.255.255.0'
+
+########VCenter Configuration#######
+
+
+vcenter: "10.75.1.210"
+vcenter_folder: "/Confluent"
+vcenter_cluster: "Mester"
+vcenter_datacenter: Mester
+guest_type: "centos7_64Guest"
+force: true
+vm_state: poweredon
+
+######### Volume configuration.
+os_datastore: Mercury-NFS
+datavolume_datastore: Mercury-NFS
+os_volume_size: 100
+data_volume_size: 200
+
+# Vmware network configuration.  This is the network name in vmware.
+vmware_management_network: "PXE"
+
+vm_cpus: 8
+vm_memory: 32000

@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: true
+  roles:
+    - role: cobbler
+    - role: vm_create
+  vars_prompt:
+    - name: vcenter_username
+      prompt: "Enter V-Center Username"
+      private: no
+    - name: vcenter_password
+      prompt: "Enter V-Center Password"
+
+- name: Wait for Hosts
+  hosts: all
+  gather_facts: false
+  roles:
+    - verify-hosts

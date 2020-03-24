@@ -1,0 +1,44 @@
+---
+# tasks file for cobbler
+
+- name: Ensure nodes exist in Cobbler
+  cobbler_system:
+    validate_certs: no
+    use_ssl: no
+    host: '{{ cobbler_server }}'
+    username: '{{ cobbler_uname }}'
+    password: '{{ cobbler_password }}'
+    name: '{{ item }}'
+    state: '{{ cobbler_state }}'
+
+    properties:
+      profile: '{{ cobbler_profile }}'
+      hostname: '{{ item }}'
+      name_servers: '{{ cobbler_nameservers }}'
+      netboot_enabled: yes
+
+    interfaces:
+      ens192:
+        macaddress: '{{ hostvars[item].mac }}'
+        ipaddress: '{{ hostvars[item].ansible_host }}'
+        netmask: '{{ cobbler_netmask }}'
+        ifgateway: '{{ cobbler_gateway }}'
+        static: yes
+        dnsname: '{{ item }}'
+
+  register: cobbler_systems
+  delegate_to: localhost
+  loop: '{{ groups["vms"] }}'
+
+
+
+- name: Commit Cobbler changes
+  cobbler_sync:
+    validate_certs: no
+    use_ssl: no
+    host: '{{ cobbler_server }}'
+    username: cobbler
+    password: cobbler
+  run_once: yes
+  delegate_to: localhost
+

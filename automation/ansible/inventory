@@ -1,0 +1,23 @@
+[zookeepers]
+con-zk-1.lab.mester.io ansible_host=10.91.1.150 mac=00:50:56:b1:33:18
+con-zk-2.lab.mester.io ansible_host=10.91.1.151 mac=00:50:56:b1:33:19
+con-zk-3.lab.mester.io ansible_host=10.91.1.152 mac=00:50:56:b1:33:20
+
+[kafkabrokers]
+con-kafka-1.lab.mester.io ansible_host=10.91.1.153 mac=00:50:56:b1:33:21
+con-kafka-2.lab.mester.io ansible_host=10.91.1.154 mac=00:50:56:b1:33:22
+con-kafka-3.lab.mester.io ansible_host=10.91.1.155 mac=00:50:56:b1:33:23
+
+[ksql]
+con-ksql-1.lab.mester.io ansible_host=10.91.1.156 mac=00:50:56:b1:33:24
+con-ksql-2.lab.mester.io ansible_host=10.91.1.157 mac=00:50:56:b1:33:25
+con-ksql-3.lab.mester.io ansible_host=10.91.1.158 mac=00:50:56:b1:33:26
+
+[services]
+con-services-1.lab.mester.io ansible_host=10.91.1.149 mac=00:50:56:b1:33:2b
+
+[vms:children]
+zookeepers
+kafkabrokers
+ksql
+services

@@ -1,0 +1,38 @@
+---
+# tasks file for vm-create
+
+- name: Build Virtual Machines
+  vmware_guest:
+      force: "{{ force }}"
+      hostname: "{{ vcenter }}"
+      username: "{{ vcenter_username  }}"
+      password: "{{ vcenter_password  }}"
+      datacenter: "{{ vcenter_datacenter }}"
+      name: '{{ item }}'
+      state: "{{ vm_state }}"
+      cluster: "{{ vcenter_cluster }}"
+      validate_certs: False
+      folder: "{{ vcenter_folder }}"
+      guest_id: "{{ guest_type }}"
+      disk:
+      - size_gb: "{{os_volume_size}}"
+        type: thin
+        datastore: "{{ os_datastore }}"
+      - size_gb: "{{data_volume_size}}"
+        type: thin
+        datastore: "{{datavolume_datastore }}"
+
+      hardware:
+        memory_mb: "{{ vm_memory }}"
+        num_cpus: "{{ vm_cpus }}"
+
+      networks:
+      - name: "{{ vmware_management_network }}"
+        mac: '{{ hostvars[item].mac }}'
+        type: dhcp
+
+      customization:
+        hostname: '{{ hostvars[item] }}'
+
+  loop: '{{ groups["vms"] }}'
+
